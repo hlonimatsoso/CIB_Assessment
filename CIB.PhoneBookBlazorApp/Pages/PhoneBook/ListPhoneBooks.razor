@@ -1,0 +1,52 @@
+﻿@page "/phoneBook/list"
+@inherits ListPhoneBooksBase
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>CIB Phone Book Directory</h1>
+    </div>
+
+
+
+
+    @if (_phoneBookList == null || IsLoading)
+    {
+        <MatProgressBar Indeterminate="true"></MatProgressBar>
+    }
+    else
+    {
+
+        <div>
+            <MatButton @onclick="@(x => NavigationManager.NavigateTo($"/phoneBook/add"))">Add New Phone Book</MatButton>
+
+            @*<MatButton OnClick="@OpenDialog" Raised="true">Add Phone Book</MatButton>*@
+        </div>
+
+        <MatTable Items="@_phoneBookList" class="mat-elevation-z5">
+            <MatTableHeader>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Record Conunt</th>
+                <th>Modify</th>
+            </MatTableHeader>
+            <MatTableRow>
+                <td>@context.PhoneBookID</td>
+
+                <td>
+                    <MatButton @onclick="@(x => NavigationManager.NavigateTo($"/phoneBook/display/{context.PhoneBookID}"))">@context.Name</MatButton>
+                </td>
+                <td>@context.Entries.Count</td>
+                <td>
+                    <div>
+                        <MatButton @onclick="@(x => NavigationManager.NavigateTo($"/phoneBook/edit/{context.PhoneBookID}"))">Edit</MatButton>
+                        <MatButton @onclick="@(x => NavigationManager.NavigateTo($"/phoneBook/delete/{context.PhoneBookID}"))">Delete</MatButton>
+                    </div>
+                </td>
+            </MatTableRow>
+        </MatTable>
+    }
+</div>
+
+
+

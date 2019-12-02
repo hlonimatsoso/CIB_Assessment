@@ -1,0 +1,94 @@
+﻿@page "/phonebook/edit/{id:int}"
+@using CIB.Models
+@using CIB.Interfaces
+
+@inject NavigationManager navMan
+
+@inject IPhoneBookService PhoneBookservice
+
+<h3>Editing Phone Book: '@phoneBook.Name'</h3>
+
+@if (phoneBook == null || IsLoading)
+{
+    <MatProgressBar Indeterminate="true"></MatProgressBar>
+
+}
+else
+{
+
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <MatTextField @bind-Value="@phoneBook.Name" Dense="true" Label="Phone Book Name"></MatTextField>
+
+                </div>
+
+                <div>
+                    <MatButton @onclick="@(x=>navMan.NavigateTo($"/phoneBook/{id}/entry/add"))">Add Entry To @phoneBook.Name</MatButton>
+
+                </div>
+                <div class="">
+                    <MatTable Items="@phoneBook.Entries" class="mat-elevation-z5">
+                        <MatTableHeader>
+                            <th>Entry ID</th>
+                            <th>Nunmber</th>
+                        </MatTableHeader>
+                        <MatTableRow>
+                            <td>@context.PhoneBookEntryID</td>
+                            <td>@context.Numuber</td>
+                            <td>
+                                <div>
+                                    <MatButton @onclick="@(x=>navMan.NavigateTo($"/phoneBookEntry/edit/{context.PhoneBookEntryID}"))">Edit</MatButton>
+                                    <MatButton @onclick="@(x=>navMan.NavigateTo($"/phoneBook/delete/{context.PhoneBookEntryID}"))">Delete</MatButton>
+                                </div>
+                            </td>
+                        </MatTableRow>
+                    </MatTable>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@Update" value="Update" />
+                @*<input type="button" class="btn" @onclick="@Cancel" value="Cancel" />*@
+                <MatButton Link="/phonebook/list" Dense="true">Cancel</MatButton>
+
+            </div>
+        </div>
+    </form>
+}
+
+
+
+
+
+@code {
+
+    [Parameter] public int id { get; set; }
+    public bool IsLoading { get; set; }
+
+    PhoneBook phoneBook = new PhoneBook();
+
+    protected override void OnInitialized()
+    {
+        IsLoading = true;
+        base.OnInitialized();
+        phoneBook = PhoneBookservice.GetPhoneBookAsync(id).GetAwaiter().GetResult();
+        IsLoading = false;
+    }
+
+    protected async Task Update()
+    {
+        await PhoneBookservice.UpdatePhoneBookAsync(id, phoneBook);
+        navMan.NavigateTo("/phonebook/list");
+
+    }
+
+    protected void Cancel()
+    {
+        navMan.NavigateTo("/phonebook/list");
+    }
+}

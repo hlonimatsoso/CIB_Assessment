@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+@*<div class="sidebar">
+        <NavMenu />
+    </div>*@
+
+<div class="main">
+
+    @*<div>
+        <div class="row justify-content-left">
+            <a href="">CIB Assessment</a>
+        </div>
+        <div class="row justify-content-center">
+            <MatButton Link="/phoneBook/list">Phone Books</MatButton>
+        </div>
+        <div class="row justify-content-right">
+            <MatButton Link="/about">About</MatButton>
+        </div>
+    </div>*@
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <a href="">CIB Assessment</a>
+            </div>
+            <div class="mat-layout-grid-cell">
+                <MatButton Link="/phoneBook/list">Phone Books</MatButton>
+            </div>
+            <div class="mat-layout-grid-cell">
+                <MatButton Link="/about">About</MatButton>
+            </div>
+        </div>
+    </div>
+    @*<div class="top-row px-4">
+
+        </div>*@
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>

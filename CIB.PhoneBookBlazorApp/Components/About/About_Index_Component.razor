@@ -1,0 +1,22 @@
+﻿<h3>About the Author</h3>
+
+<div class="mat-elevation-z20">
+    Hi, I am <b>@Name</b>
+    <br />
+    <img src="/css/Images/Me.PNG" height="160" width="150" />
+    <br />
+    Cache me outside... on Youtube DJ'ing or demoing my Microsoft Kinect for Windows creations <a href="@YouTubeUrl">here</a>, or on a more serious note on Linked on <a href="@LinkedInUrl">over there</a>
+    <br />
+    #SmileyFace
+</div>
+
+
+
+@code {
+    // https://www.youtube.com/user/hloni2010
+    [Parameter] public string Name { get; set; }
+    [Parameter] public string LinkedInUrl { get; set; }
+    [Parameter] public string YouTubeUrl { get; set; }
+
+
+}

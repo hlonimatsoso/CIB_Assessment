@@ -1,0 +1,69 @@
+﻿@page "/phonebook/display/{id:int}"
+@using CIB.Models
+@using CIB.Interfaces
+
+@inject NavigationManager navMan
+
+@inject IPhoneBookService PhoneBookservice
+
+<h3>Viewing Phone Book: '@phoneBook.Name'</h3>
+
+@if (phoneBook == null || IsLoading)
+{
+    <MatProgressBar Indeterminate="true"></MatProgressBar>
+
+}
+else
+{
+
+    <div class="mat-elevation-z10">
+
+        <div>@phoneBook.Name</div>
+
+        @foreach (PhoneBookEntry entry in phoneBook.Entries)
+        {
+            <div>
+                @entry.Numuber
+            </div>
+        }
+
+        <div>
+            <MatButton Link="/phonebook/list" Dense="true">Back</MatButton>
+
+            <MatButton @onclick="@(x=>navMan.NavigateTo($"/phoneBook/edit/{phoneBook.PhoneBookID}"))">Edit</MatButton>
+            <MatButton @onclick="@(x=>navMan.NavigateTo($"/phoneBook/delete/{phoneBook.PhoneBookID}"))">Delete</MatButton>
+        </div>
+    </div>
+}
+
+
+
+
+
+@code {
+
+    [Parameter] public int id { get; set; }
+    public bool IsLoading { get; set; }
+
+    PhoneBook phoneBook = new PhoneBook();
+
+    protected override void OnInitialized()
+    {
+        IsLoading = true;
+        base.OnInitialized();
+        phoneBook = PhoneBookservice.GetPhoneBookAsync(id).GetAwaiter().GetResult();
+        IsLoading = false;
+    }
+
+    protected async Task Update()
+    {
+        await PhoneBookservice.UpdatePhoneBookAsync(id, phoneBook);
+        navMan.NavigateTo("/phonebook/list");
+
+    }
+
+    protected void Cancel()
+    {
+        navMan.NavigateTo("/phonebook/list");
+    }
+}

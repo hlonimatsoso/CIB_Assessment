@@ -1,0 +1,48 @@
+﻿@page "/phonebook/delete/{id:int}"
+@using CIB.Models
+@using CIB.Interfaces
+
+@inject NavigationManager navMan
+
+@inject IPhoneBookService PhoneBookservice
+
+<h3>Delete Phone Book</h3>
+<form>
+    <div class="alert alert-danger">
+        <strong>WARNING!</strong> Are you sure you want to delete <strong>'@phoneBook.Name'</strong> 
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@Continue" value="Continue" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+
+
+@code {
+
+    [Parameter] public int id { get; set; }
+
+    PhoneBook phoneBook = new PhoneBook();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        phoneBook = PhoneBookservice.GetPhoneBookAsync(id).GetAwaiter().GetResult();
+
+    }
+
+    protected async Task Continue()
+    {
+        await PhoneBookservice.DeletePhoneBookAsync(id);
+        navMan.NavigateTo("/phonebook/list");
+
+    }
+
+    protected void Cancel()
+    {
+        navMan.NavigateTo("/phonebook/list");
+    }
+}

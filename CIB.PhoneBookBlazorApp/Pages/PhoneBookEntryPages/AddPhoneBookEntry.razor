@@ -1,0 +1,64 @@
+﻿@page "/phonebook/{phoneBookID:int}/Entry/add"
+@using CIB
+@using CIB.Models
+@using CIB.Interfaces
+
+@inject NavigationManager navMan
+
+@inject IPhoneBookEntryService PhoneBookEntryService
+@inject IPhoneBookService PhoneBookService
+
+
+<h3>Adding Phone Book Entry To : '@phoneBook.Name'</h3>
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <MatTextField Value="@phoneBookEntry.Numuber.ToString()" OnInput="@(e => phoneBookEntry.Numuber = string.IsNullOrEmpty(e.Value.ToString())?0: Convert.ToInt32(e.Value))" Dense="true" Label="Phone Book Name"></MatTextField>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+
+            <input type="button" class="btn btn-primary" @onclick="@Add" value="Add" />
+            @*<MatButton Link="/phonebook/list" Dense="true">Cancel</MatButton>*@
+
+            @*       <MatButton OnClick="@Add" Dense="true">Add</MatButton>*@
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+
+
+@code {
+
+    [Parameter] public int phoneBookID { get; set; }
+
+    CIB.Models.PhoneBook phoneBook;
+    CIB.Models.PhoneBookEntry phoneBookEntry;
+
+
+    public string PhoneBookEditFullURL { get { return $"{Constants.BASE_URL}/phonebook/edit/{phoneBookID}"; } }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        phoneBookEntry = new CIB.Models.PhoneBookEntry() { };
+        phoneBook =  PhoneBookService.GetPhoneBookAsync(phoneBookID).GetAwaiter().GetResult();
+    }
+
+    protected async Task Add(MouseEventArgs e)
+    {
+
+        phoneBookEntry.PhoneBook = phoneBook;
+        await PhoneBookEntryService.AddPhoneBookEntryAsync(phoneBookEntry);
+        navMan.NavigateTo($"phonebook/edit/{phoneBookID}");
+    }
+
+    protected void Cancel(MouseEventArgs e)
+    {
+        navMan.NavigateTo($"phonebook/edit/{phoneBookID}");
+    }
+}

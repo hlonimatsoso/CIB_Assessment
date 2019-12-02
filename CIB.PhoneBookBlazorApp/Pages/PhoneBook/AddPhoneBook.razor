@@ -1,0 +1,56 @@
+﻿@page "/phonebook/add"
+@using CIB
+@using CIB.Models
+@using CIB.Interfaces
+
+@inject NavigationManager navMan
+
+@inject IPhoneBookService PhoneBookservice
+
+<h3>Add Phone Book</h3>
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <MatTextField @bind-Value="@phoneBook.Name" Dense="true" Label="Phone Book Name"></MatTextField>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+
+            <input type="button" class="btn btn-primary" @onclick="@Add" value="Add" />
+            @*<MatButton Link="/phonebook/list" Dense="true">Cancel</MatButton>*@
+
+            @*       <MatButton OnClick="@Add" Dense="true">Add</MatButton>*@
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+
+
+@code {
+
+    PhoneBook phoneBook;
+
+    public string PhoneBookListURL { get { return $"{Constants.BASE_URL}/phonebook/list"; } }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        phoneBook = new PhoneBook() { Entries = new List<PhoneBookEntry> { } };
+
+    }
+
+    protected async Task Add(MouseEventArgs e)
+    {
+        await PhoneBookservice.AddPhoneBookAsync(phoneBook);
+        navMan.NavigateTo("/phonebook/list");
+    }
+
+    protected void Cancel(MouseEventArgs e)
+    {
+        navMan.NavigateTo("/phonebook/list");
+    }
+}
