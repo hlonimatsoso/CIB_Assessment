@@ -36,8 +36,8 @@ namespace CIB.PhoneBookBlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<PhoneBookEntry>();
-            services.AddSingleton<PhoneBook>();
+            services.AddTransient<PhoneBookEntry>();
+            services.AddTransient<PhoneBook>();
             services.AddDbContext<PhoneBookDBContext>(optionBuilder => optionBuilder.UseSqlServer($"{Configuration.GetSection("ConnectionStrings:Default").Value}"));
             services.AddTransient<IPhoneBookRepo, PhoneBookSqlRepo>();
             services.AddTransient<IPhoneBookService, PhoneBookService>();

@@ -1,14 +1,75 @@
-﻿<h3>About the Author</h3>
+﻿@*<h3>About the Author</h3>
 
-<div class="mat-elevation-z20">
-    Hi, I am <b>@Name</b>
+    <div class="mat-elevation-z20">
+        Hi, I am <b>@Name</b>
+        <br />
+        <img src="/css/Images/Me.PNG" height="160" width="150" />
+        <br />
+        Cache me outside... on Youtube DJ'ing or demoing my Microsoft Kinect for Windows creations <a href="@YouTubeUrl">here</a>, or on a more serious note on Linked on <a href="@LinkedInUrl">over there</a>
+        <br />
+        #SmileyFace
+    </div>
+
     <br />
-    <img src="/css/Images/Me.PNG" height="160" width="150" />
-    <br />
-    Cache me outside... on Youtube DJ'ing or demoing my Microsoft Kinect for Windows creations <a href="@YouTubeUrl">here</a>, or on a more serious note on Linked on <a href="@LinkedInUrl">over there</a>
-    <br />
-    #SmileyFace
-</div>
+
+    <MatCard class="demo-mat-card">
+        <MatCardContent>
+            <MatCardMedia Wide="true" ImageUrl="/css/Images/Me.PNG"></MatCardMedia>
+            <div class="demo-mat-card-content">
+                <MatHeadline6 class="demo-mat-card-clean-margin">
+                    About the Author
+                </MatHeadline6>
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    by the author
+                </MatSubtitle2>
+            </div>
+
+            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+                Cache me outside... on Youtube DJ'ing or demoing my Microsoft Kinect for Windows creations <a href="@YouTubeUrl">here</a>, or on a more serious note on Linked on <a href="@LinkedInUrl">over there</a>
+                <br />
+                #SmileyFace
+            </MatBody2>
+        </MatCardContent>
+        <MatCardActions>
+            <a href="@YouTubeUrl">You Tube</a>
+            <a href="@LinkedInUrl">Linked In</a>
+        </MatCardActions>
+    </MatCard>*@
+
+
+<MatCard class="demo-mat-card">
+    <MatCardContent>
+        <MatCardMedia Wide="true" ImageUrl="/css/Images/Me.PNG">
+            <div class="demo-mat-card-content" style="color: white;">
+                <MatHeadline6 class="demo-mat-card-clean-margin">
+                    About the Author
+                </MatHeadline6>
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    by the author
+                </MatSubtitle2>
+            </div>
+        </MatCardMedia>
+        <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+            Cache me outside... on Youtube DJ'ing or demoing my Microsoft Kinect for Windows creations <a href="@YouTubeUrl">here</a>, or on a more serious note on Linked on <a href="@LinkedInUrl">over there</a>
+            <br />
+            #SmileyFace <br />
+            <MatIcon>favourite</MatIcon>
+            <MatIcon Icon="@MatIconNames._3d_rotation"></MatIcon>
+
+        </MatBody2>
+    </MatCardContent>
+    <MatCardActions>
+        <MatCardActionButtons>
+            <MatButton Link="@YouTubeUrl">Youtueb</MatButton>
+            <MatButton Link="@LinkedInUrl">Linked In</MatButton>
+        </MatCardActionButtons>
+
+        <MatCardActionIcons>
+            <MatIconButton Icon="@MatIconNames.Favorite"></MatIconButton>
+            <MatIconButton Icon="@MatIconNames.Dashboard"></MatIconButton>
+        </MatCardActionIcons>
+    </MatCardActions>
+</MatCard>
 
 
 
@@ -20,3 +81,17 @@
 
 
 }
+
+<style>
+    .demo-mat-card {
+        max-width: 650px;
+    }
+
+    .demo-mat-card-content {
+        padding: 1rem;
+    }
+
+    .demo-mat-card-clean-margin {
+        margin: 0px;
+    }
+</style>

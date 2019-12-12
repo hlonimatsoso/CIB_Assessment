@@ -15,6 +15,7 @@
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
+
     @Html.EmbeddedBlazorContent()
 </head>
 <body>
@@ -36,3 +37,24 @@
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
+
+<script>
+    console.log("Log");
+    console.warn("Warn");
+    console.error("Error");
+
+    window.Add = (a, b) => {
+        console.log('A = ' + a);
+        console.log('B = ' + b);
+        var x = a + ' + ' + b + ' is ' + (a + b);
+        console.log('C = ' + x);
+
+        return x;
+    };
+</script>
+
+
+<style>
+
+
+</style>

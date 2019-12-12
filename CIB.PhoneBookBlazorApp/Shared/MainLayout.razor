@@ -5,36 +5,66 @@
 
 <div class="main">
 
-    @*<div>
-        <div class="row justify-content-left">
-            <a href="">CIB Assessment</a>
-        </div>
-        <div class="row justify-content-center">
-            <MatButton Link="/phoneBook/list">Phone Books</MatButton>
-        </div>
-        <div class="row justify-content-right">
-            <MatButton Link="/about">About</MatButton>
-        </div>
-    </div>*@
 
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <a href="">CIB Assessment</a>
-            </div>
-            <div class="mat-layout-grid-cell">
-                <MatButton Link="/phoneBook/list">Phone Books</MatButton>
-            </div>
-            <div class="mat-layout-grid-cell">
-                <MatButton Link="/about">About</MatButton>
-            </div>
-        </div>
-    </div>
-    @*<div class="top-row px-4">
+    <MatDrawerContainer Style="width: 100vw; height: 100vh;">
+        <MatDrawer @bind-Opened="@Opened" Mode="@MatDrawerMode.Modal">
+            <ul>
+                <li>
+                    <NavLink class="nav-link" href="/about" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true">About</span>
+                        <span class="oi oi-bell" aria-hidden="true">Bell</span>
 
-        </div>*@
+                    </NavLink>
+                </li>
+            </ul>
+        </MatDrawer>
+        <MatDrawerContent>
 
-    <div class="content px-4">
-        @Body
-    </div>
+
+            <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        <div class="mat-layout-grid-inner">
+                            <div class="mat-layout-grid-cell">
+                                <a href="">CIB Assessment</a>
+                            </div>
+                            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                                <MatButton Link="/phoneBook/list">Phone Books</MatButton>
+                            </div>
+                            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2">
+                                <MatButton Link="/about">About</MatButton>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                        @Body
+                    </div>
+
+                    <div>
+                        <p>
+                            <div>
+                                <MatButton OnClick="@((e) => ButtonClicked())">Open Menu</MatButton>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </MatDrawerContent>
+    </MatDrawerContainer>
+
+
+
 </div>
+
+
+@code {
+    bool Opened = false;
+
+    void ButtonClicked()
+    {
+        Opened = !Opened;
+    }
+
+}
